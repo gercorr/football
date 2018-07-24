@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+import ball from './ball.png';
 import Pitch from '../pitch/Pitch';
 import './App.css';
 
@@ -8,8 +8,8 @@ class App extends Component {
     return (
       <div className="App">
         <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
+          <img src={ball} className="App-logo" alt="logo" />
+          <h1 className="App-title">Football App</h1>
         </header>
         <Pitch></Pitch>
       </div>
