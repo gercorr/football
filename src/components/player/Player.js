@@ -21,7 +21,7 @@ class Player extends Component {
   render() {
     //add onTouchStart
     return (
-      <div className={'Player'} onDragOver={this.preventDefault} onDragEnd={this.onDragEnd.bind(this)}>
+      <div className={'Player'} onDragOver={(event) => this.preventDefault(event)} onDragEnd={(event) => this.onDragEnd(event)}>
         <img src={PlayerImage} className="Player-Image" alt="" />
         {this.props.player.name}
       </div>

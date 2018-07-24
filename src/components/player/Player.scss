@@ -2,6 +2,7 @@
 .Player {
 	user-select: none;
 	transition: background-color 0.1s ease-in-out;
+	cursor: grab;
 	text-align: center;
 
 	&.is-active {

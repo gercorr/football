@@ -5,6 +5,14 @@ import Position from '../position/Position'
 
 class Pitch extends Component {
 
+  constructor(props) {
+    super(props);
+    this.state = { 
+      positionIdToSwap: null,
+      positions: this.loadPositionsFromDb()
+    };
+  }
+
   renderPositions = () => {
 
     for(let i = 0; i < 11; i ++){
@@ -46,27 +54,76 @@ class Pitch extends Component {
     return positionArray442;
   }
 
+
+  // yuck. Switch to something nicer
+  swapPositions(newPos, oldPos){
+    const {positions} = this.state;
+
+    
+
+    for (let oldY = 0; oldY < 6; oldY++) {
+      for (let oldX = 0; oldX < 5; oldX++) {
+        if(positions[oldY][oldX].positionId === oldPos){
+
+          for (let newY = 0; newY < 6; newY++) {
+            for (let newX = 0; newX < 5; newX++) {
+              if(positions[newY][newX].positionId === newPos){
+                const toSwap = positions[newY][newX];
+                positions[newY][newX] = positions[oldY][oldX];
+                positions[oldY][oldX] = toSwap;
+
+                this.setState({
+                  positions
+                });
+
+                return;
+              }
+            }
+          }
+
+        }
+      }
+    }
+
+
+  }
+
   onDragEnd(previousPositionId) {
-    console.log(previousPositionId);
+    const {positionIdToSwap} = this.state; 
+    console.log('Previous: ' + previousPositionId);
+    if (positionIdToSwap != null && positionIdToSwap !== previousPositionId){
+      console.log('Swapping: ' + positionIdToSwap + ' with: ' + previousPositionId);
+      this.swapPositions(positionIdToSwap, previousPositionId);
+      this.setState({
+        positionIdToSwap: null
+      })
+    }
+  }
+
+  onDrop(newPositionId) {
+    console.log('New Pos: ' + newPositionId);
+    this.setState({
+      positionIdToSwap: newPositionId
+    })
   }
 
   render() {
     let positionsRender = [];
-    const positions = this.loadPositionsFromDb();
+    const {positions} = this.state;
     for (let i = 0; i < 6; i++) {
       if(positions[i][2].visible) {
         positionsRender.push(
-          <div>
+          <div key={i}>
             <div className="Pitch-Grid-Five">
-              {positions[i].map(x=> <Position key={x.positionId} onDragEnd={this.onDragEnd} positionId={x.positionId} player={x.player} />)}
+              {positions[i].map(x=> <Position key={'Position' + x.positionId} onDragEndCallback={(previousPositionId) => this.onDragEnd(previousPositionId)} onDropCallback={(newPositionId) => this.onDrop(newPositionId)} positionId={x.positionId} player={x.player} />)}
             </div>
           </div>
         );
       } else {
         positionsRender.push(
-          <div>
+          <div key={i}>
             <div className="Pitch-Grid-Four">
-              {positions[i].map(x=> <Position key={x.positionId} onDragEndCallback={this.onDragEnd} positionId={x.positionId} player={x.player} />)}
+              {positions[i].map(x=> <Position key={'Position' + x.positionId} onDragEndCallback={(previousPositionId) => this.onDragEnd(previousPositionId)} onDropCallback={(newPositionId) => this.onDrop(newPositionId)} positionId={x.positionId} player={x.player} />)}
             </div>
           </div>
         );

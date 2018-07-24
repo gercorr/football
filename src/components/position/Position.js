@@ -11,10 +11,12 @@ class Position extends Component {
 
   onDrop(event) {
     event.preventDefault();
-    console.log('Position Dropped: ' + this.props.positionId);
+    // console.log('Position Dropped: ' + this.props.positionId);
     this.setState({
       draggedOver: false
     })
+
+    this.props.onDropCallback(this.props.positionId);
   }
 
   onDragOver(event) {
@@ -34,7 +36,12 @@ class Position extends Component {
   render() {
     const {draggedOver} = this.state; 
     return (
-      <div className={draggedOver ? "Position dragged-over" : "Position"} onDragOver={this.onDragOver.bind(this)} onDragLeave={this.onDragLeave.bind(this)} onDrop={this.onDrop.bind(this)}>
+      <div 
+        className={draggedOver ? "Position dragged-over" : "Position"} 
+        onDragOver={(event) => this.onDragOver(event)} 
+        onDragLeave={(event) => this.onDragLeave(event)} 
+        onDrop={(event) => this.onDrop(event)}
+      >
         {this.props.player ? <Player onDragEndCallback={this.props.onDragEndCallback} positionId={this.props.positionId} player={this.props.player}/> : null}
       </div>
     );

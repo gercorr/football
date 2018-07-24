@@ -17,6 +17,7 @@
   display: grid;
   grid-gap: 5px 5px;
   grid-template-columns: 70px 70px 70px 70px 70px;
+  grid-template-rows: auto;
 }
 
 .Pitch-Grid-Four {
@@ -24,6 +25,8 @@
   grid-gap: 5px 5px;
   /* grid-template-columns: 87.5px 87.5px 0px 87.5px 87.5px; */
   grid-template-columns: 70px 70px 70px 70px 70px;
+  grid-template-rows: auto;
+  min-height: 100%;
 }
 
 .Pitch-Image {
