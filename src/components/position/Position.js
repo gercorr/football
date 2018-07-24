@@ -3,16 +3,40 @@ import './Position.css';
 import Player from '../player/Player'
 
 class Position extends Component {
+
+  constructor(props) {
+    super(props);
+    this.state = { draggedOver: false };
+  }
+
+  onDrop(event) {
+    event.preventDefault();
+    console.log('Position Dropped: ' + this.props.positionId);
+    this.setState({
+      draggedOver: false
+    })
+  }
+
+  onDragOver(event) {
+    event.preventDefault();
+    this.setState({
+      draggedOver: true
+    })
+  }
+
+  onDragLeave(event) {
+    event.preventDefault();
+    this.setState({
+      draggedOver: false
+    })
+  }
+
   render() {
-    if(this.props.player) {
-      return (
-        <div className="Position">
-          <Player player={this.props.player}/>
-        </div>
-      );
-    }
+    const {draggedOver} = this.state; 
     return (
-      <div className="Position"/>
+      <div className={draggedOver ? "Position dragged-over" : "Position"} onDragOver={this.onDragOver.bind(this)} onDragLeave={this.onDragLeave.bind(this)} onDrop={this.onDrop.bind(this)}>
+        {this.props.player ? <Player onDragEndCallback={this.props.onDragEndCallback} positionId={this.props.positionId} player={this.props.player}/> : null}
+      </div>
     );
   }
 }

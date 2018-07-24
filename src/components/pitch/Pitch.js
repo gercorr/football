@@ -30,8 +30,8 @@ class Pitch extends Component {
       [new Position(5), new Position(6), new Position(7), new Position(8), new Position(9)],
       [new Position(10, new Player('LM', 8)), new Position(11, new Player('CM', 10)), new Position(12), new Position(13, new Player('CM', 6)), new Position(14, new Player('RM', 7))],
       [new Position(15), new Position(16), new Position(17), new Position(18), new Position(19)],
-      [new Position(20, new Player('LB', 5)), new Position(20, new Player('CB', 21)), new Position(22), new Position(23, new Player('CB', 3)), new Position(24, new Player('RB', 4))],
-      [new Position(25), new Position(26), new Position(27), new Position(28), new Position(29)]
+      [new Position(20, new Player('LB', 5)), new Position(21, new Player('CB', 21)), new Position(22), new Position(23, new Player('CB', 3)), new Position(24, new Player('RB', 4))],
+      [new Position(25), new Position(26), new Position(27, new Player('GK', 1)), new Position(28), new Position(29)]
     ];
 
     // const playerArray433 = [
@@ -46,6 +46,10 @@ class Pitch extends Component {
     return positionArray442;
   }
 
+  onDragEnd(previousPositionId) {
+    console.log(previousPositionId);
+  }
+
   render() {
     let positionsRender = [];
     const positions = this.loadPositionsFromDb();
@@ -54,7 +58,7 @@ class Pitch extends Component {
         positionsRender.push(
           <div>
             <div className="Pitch-Grid-Five">
-              {positions[i].map(x=> <Position positionId={x.positionId} player={x.player} />)}
+              {positions[i].map(x=> <Position key={x.positionId} onDragEnd={this.onDragEnd} positionId={x.positionId} player={x.player} />)}
             </div>
           </div>
         );
@@ -62,7 +66,7 @@ class Pitch extends Component {
         positionsRender.push(
           <div>
             <div className="Pitch-Grid-Four">
-              {positions[i].map(x=> <Position positionId={x.positionId} player={x.player} />)}
+              {positions[i].map(x=> <Position key={x.positionId} onDragEndCallback={this.onDragEnd} positionId={x.positionId} player={x.player} />)}
             </div>
           </div>
         );
