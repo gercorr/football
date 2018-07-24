@@ -1,0 +1,31 @@
+.Pitch {
+  display: inline-block;
+  position: relative;
+}
+
+.Pitch-Grid{
+  display: grid;
+  padding-top: 10px;
+  grid-gap: 5px 5px;
+  grid-template-rows: 80px 80px 80px 80px 80px 80px;
+  position: absolute;
+  right: 0px;
+  top: 0px;
+}
+
+.Pitch-Grid-Five {
+  display: grid;
+  grid-gap: 5px 5px;
+  grid-template-columns: 70px 70px 70px 70px 70px;
+}
+
+.Pitch-Grid-Four {
+  display: grid;
+  grid-gap: 5px 5px;
+  /* grid-template-columns: 87.5px 87.5px 0px 87.5px 87.5px; */
+  grid-template-columns: 70px 70px 70px 70px 70px;
+}
+
+.Pitch-Image {
+  width: 370px;
+}
